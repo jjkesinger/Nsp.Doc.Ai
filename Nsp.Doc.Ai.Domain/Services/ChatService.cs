@@ -7,7 +7,7 @@ namespace Nsp.Doc.Ai.Domain.Services
     {
         public async Task<string> Ask(string query, CancellationToken cancellationToken)
         {
-            var chatHistory = new ChatHistory($"Given this query: {query}, answer the question based on the documents in the library.");
+            var chatHistory = new ChatHistory($"Given this query: {query}, answer the question based on the documents in the library. List the title of the document.");
 
             var chatCompletion = kernel.GetRequiredService<IChatCompletionService>();
             return (await chatCompletion.GetChatMessageContentAsync(chatHistory,

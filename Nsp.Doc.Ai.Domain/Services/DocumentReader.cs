@@ -13,7 +13,7 @@ namespace Nsp.Doc.Ai.Domain.Services
                 {
                     Key = Guid.NewGuid(),
                     Title = FileName,
-                    Summary = Contents.Length > 0 ? System.Text.Encoding.UTF8.GetString(Contents) : string.Empty,
+                    Content = Contents.Length > 0 ? System.Text.Encoding.UTF8.GetString(Contents) : string.Empty,
                 });
             }
 

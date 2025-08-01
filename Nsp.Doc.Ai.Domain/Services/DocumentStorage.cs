@@ -20,7 +20,7 @@ namespace Nsp.Doc.Ai.Domain.Services
         {
             var tasks = documents.Select(entry => Task.Run(async () =>
             {
-                entry.DefinitionEmbedding = (await embedding.GenerateAsync(entry.Summary)).Vector;
+                entry.DefinitionEmbedding = (await embedding.GenerateAsync(entry.Content)).Vector;
             }));
 
             await Task.WhenAll(tasks);

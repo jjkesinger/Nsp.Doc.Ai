@@ -10,7 +10,7 @@ namespace Nsp.Doc.Ai.Domain.Services
     {
         [KernelFunction("SearchTheDocuments")]
         [Description("Search for a document in the library similar to the given query.")]
-        public async Task<string[]> SearchAsync(string query, CancellationToken cancellationToken)
+        public async Task<Document[]> SearchAsync(string query, CancellationToken cancellationToken)
         {
             var collection = store.GetCollection<Guid, Document>("library");
 
@@ -20,7 +20,7 @@ namespace Nsp.Doc.Ai.Domain.Services
                     cancellationToken: cancellationToken)
                 .ToBlockingEnumerable(cancellationToken);
             
-            return [.. results.Select(r => r.Record.Summary)];
+            return [.. results.Select(r => r.Record)];
         }
     }
 }

@@ -14,8 +14,8 @@ namespace Nsp.Doc.Ai.Domain.Model
         public required string Title { get; set; }
 
         [VectorStoreData]
-        [JsonPropertyName("summary")]
-        public required string Summary { get; set; }
+        [JsonPropertyName("content")]
+        public required string Content { get; set; }
 
         [VectorStoreVector(1536)]
         [JsonPropertyName("embedding")]
