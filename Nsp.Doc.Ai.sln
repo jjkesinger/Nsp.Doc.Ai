@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35818.85 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nsp.Doc.Ai.Domain", "Nsp.Doc.Ai.Domain\Nsp.Doc.Ai.Domain.csproj", "{FE00842A-1C90-46DA-B1B8-C5BE654690EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nsp.Doc.Ai.Api", "Nsp.Doc.Ai.Api\Nsp.Doc.Ai.Api.csproj", "{C71138B6-8486-465E-A313-45C47BF0A4DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE00842A-1C90-46DA-B1B8-C5BE654690EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE00842A-1C90-46DA-B1B8-C5BE654690EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE00842A-1C90-46DA-B1B8-C5BE654690EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE00842A-1C90-46DA-B1B8-C5BE654690EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C71138B6-8486-465E-A313-45C47BF0A4DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C71138B6-8486-465E-A313-45C47BF0A4DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C71138B6-8486-465E-A313-45C47BF0A4DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C71138B6-8486-465E-A313-45C47BF0A4DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B635BE32-EDE7-423F-A0CF-2C928D65EE75}
+	EndGlobalSection
+EndGlobal
