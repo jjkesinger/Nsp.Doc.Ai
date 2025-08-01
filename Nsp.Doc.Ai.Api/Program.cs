@@ -16,23 +16,24 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/test", async (string query, IServiceProvider sp, DocumentStorage doc, DocumentReader s, ChatService cs, CancellationToken ct) =>
+app.MapGet("/ask", async (string query, ChatService cs, CancellationToken ct) =>
 {
-    var collectionName = "test2";
-    // var list = new List<(string FileName, string FileType, byte[] Contents)>
-    // {
-    //     ("test.txt", "text/plain", System.Text.Encoding.UTF8.GetBytes("This ladder is silver.")),
-    //     ("example.txt", "text/plain", System.Text.Encoding.UTF8.GetBytes("The sky is blue.")),
-    //     ("sample.txt", "text/plain", System.Text.Encoding.UTF8.GetBytes("The desk is brown.")),
-    //     ("document.txt", "text/plain", System.Text.Encoding.UTF8.GetBytes("The car is red.")),
-    //     ("file.txt", "text/plain", System.Text.Encoding.UTF8.GetBytes("The book is on the table."))
-    // };
+    return await cs.Ask(query, ct);
+});
 
-    // var docs = await s.ReadDocuments(list, ct);
-    // await doc.StoreDocuments(collectionName, docs, ct);
+app.MapGet("/seed", async (DocumentStorage doc, DocumentReader s, CancellationToken ct) =>
+{
+    var list = new List<(string FileName, string FileType, byte[] Contents)>
+    {
+        ("test.txt", "text/plain", System.Text.Encoding.UTF8.GetBytes("This ladder is silver.")),
+        ("example.txt", "text/plain", System.Text.Encoding.UTF8.GetBytes("The sky is blue.")),
+        ("sample.txt", "text/plain", System.Text.Encoding.UTF8.GetBytes("The desk is brown.")),
+        ("document.txt", "text/plain", System.Text.Encoding.UTF8.GetBytes("The car is red.")),
+        ("file.txt", "text/plain", System.Text.Encoding.UTF8.GetBytes("The book is on the table."))
+    };
 
-    return await cs.Test(collectionName, query, ct);
-})
-.WithName("Test");
+    await doc.StoreDocuments(await s.ReadDocuments(list, ct), ct);
+    return Results.Ok("Documents created successfully.");
+});
 
 app.Run();

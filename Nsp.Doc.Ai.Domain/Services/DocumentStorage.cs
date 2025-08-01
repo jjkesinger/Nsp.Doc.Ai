@@ -6,9 +6,9 @@ namespace Nsp.Doc.Ai.Domain.Services
 {
     public class DocumentStorage(VectorStore store, IEmbeddingGenerator<string, Embedding<float>> embedding)
     {
-        public async Task StoreDocuments(string collectionName, Document[] documents, CancellationToken cancellationToken)
+        public async Task StoreDocuments(Document[] documents, CancellationToken cancellationToken)
         {
-            var collection = store.GetCollection<ulong, Document>(collectionName);
+            var collection = store.GetCollection<ulong, Document>("library");
             await collection.EnsureCollectionExistsAsync(cancellationToken);
 
             await GenerateEmbedding(documents);
