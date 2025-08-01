@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch .NET Web API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build", // Optional: ensures project is built before launch
+            "program": "${workspaceFolder}/Nsp.Doc.Ai.Api/bin/Debug/net9.0/Nsp.Doc.Ai.Api.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)",
+                "uriFormat": "%s/test" // Or your API's base path
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/src": "${workspaceFolder}"
+            }
+        }
+    ]
+}
