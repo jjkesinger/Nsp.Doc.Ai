@@ -12,21 +12,29 @@ namespace Nsp.Doc.Ai.Domain.Services
             {
                 if (file.FileType == "text/plain")
                 {
-                    docs.Add(new Document
+                    var contents = System.Text.Encoding.UTF8.GetString(file.Contents);
+                    if (!string.IsNullOrWhiteSpace(contents))
                     {
-                        Key = Guid.NewGuid(),
-                        Title = file.FileName,
-                        Content = System.Text.Encoding.UTF8.GetString(file.Contents)
-                    });
+                        docs.Add(new Document
+                        {
+                            Key = Guid.NewGuid(),
+                            Title = file.FileName,
+                            Content = contents
+                        });
+                    }
                 }
                 else if (file.FileType == "application/pdf")
                 {
-                    docs.Add(new Document
+                    var contents = pdfReader.ReadPdfContent(file.Contents);
+                    if (!string.IsNullOrWhiteSpace(contents))
                     {
-                        Key = Guid.NewGuid(),
-                        Title = file.FileName,
-                        Content = pdfReader.ReadPdfContent(file.Contents)
-                    });
+                        docs.Add(new Document
+                        {
+                            Key = Guid.NewGuid(),
+                            Title = file.FileName,
+                            Content = contents
+                        });
+                    }
                 }
             });
 

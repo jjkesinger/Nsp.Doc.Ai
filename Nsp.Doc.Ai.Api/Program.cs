@@ -36,21 +36,17 @@ app.MapGet("/ask", async (string query, ChatService cs, CancellationToken ct) =>
 
 app.MapPost("/upload", async ([FromForm]IFormFileCollection files, DocumentStorage doc, DocumentReader s, CancellationToken ct) =>
 {
-    foreach (var file in files)
+    var docFiles = (await Task.WhenAll(files.Select(async file =>
     {
-        if (file.Length > 0)
-        {
-            var fileName = file.FileName;
-            var fileType = file.ContentType;
+        using var stream = new MemoryStream();
+        await file.CopyToAsync(stream, ct);
+        return (file.FileName, file.ContentType, stream.ToArray());
+    }))).ToList();
 
-            using var stream = new MemoryStream();
-            await file.CopyToAsync(stream, ct);
+    var docs = await s.ReadDocuments(docFiles, ct);
+    await doc.StoreDocuments(docs, ct);
 
-            await doc.StoreDocuments(await s.ReadDocuments([(fileName, fileType, stream.ToArray())], ct), ct);
-        }
-    }
-
-    return Results.Ok("Files uploaded successfully.");
+    return Results.Ok($"{docs.Length} File(s) uploaded successfully.");
 }).DisableAntiforgery();
 
 app.Run();
