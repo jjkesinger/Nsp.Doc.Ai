@@ -4,7 +4,7 @@ using Microsoft.Extensions.VectorData;
 using Microsoft.SemanticKernel;
 using Nsp.Doc.Ai.Domain.Model;
 
-namespace Nsp.Doc.Ai.Domain.Services
+namespace Nsp.Doc.Ai.Domain.Plugins
 {
     public class DocumentSearchPlugin(VectorStore store, IEmbeddingGenerator<string, Embedding<float>> embeddingGenerator)
     {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.SemanticKernel;
+using Nsp.Doc.Ai.Domain.Plugins;
 using Nsp.Doc.Ai.Domain.Services;
 using Qdrant.Client;
 
