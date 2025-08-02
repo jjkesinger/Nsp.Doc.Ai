@@ -24,26 +24,34 @@ This solution targets **.NET 9** and integrates with Azure OpenAI for advanced l
 5. **API Keys and Endpoints**
    - Obtain your Azure OpenAI API key and endpoint from the Azure Portal.
 
+6. **Qdrant Vector Storage**
+   - Set up a Qdrant instance for vector storage. You can run Qdrant locally using Docker or use a managed Qdrant Cloud service.
+   - **To run Qdrant locally with Docker:**
+
+   - docker run -p 6333:6333 -p 6334:6334 qdrant/qdrant
+  - For more information or advanced configuration, see the [Qdrant documentation](https://qdrant.tech/documentation/).
+   - Note the Qdrant endpoint (e.g., `http://localhost:6333`) for configuration.
+
 ---
 
 ## Configuration
 
 1. **Set Environment Variables**
 
-   Configure the following environment variables with your Azure OpenAI details:
+   Configure the following environment variables with your Azure OpenAI and Qdrant details:
 
-   - `AZURE_OPENAI_ENDPOINT` – Your Azure OpenAI endpoint URL.
-   - `AZURE_OPENAI_KEY` – Your Azure OpenAI API key.
-   - `AZURE_OPENAI_EMBEDDING_DEPLOYMENT` – The deployment name for `text-embedding-3-large`.
-   - `AZURE_OPENAI_CHAT_DEPLOYMENT` – The deployment name for `gpt-4o`.
+   - `AzureOpenAiEndpoint` – Your Azure OpenAI endpoint URL.
+   - `AzureOpenAiKey` – Your Azure OpenAI API key.
+   - `QdrantHost` – The URL of your Qdrant instance (e.g., `http://localhost:6333`).
+   - `QdrantKey` - Your Qdrant API Key 
 
    Example (Windows Command Prompt):
 
-    set AZURE_OPENAI_ENDPOINT=https://<your-resource-name>.openai.azure.com/ 
-    set AZURE_OPENAI_KEY=<your-api-key> 
-    set AZURE_OPENAI_EMBEDDING_DEPLOYMENT=text-embedding-3-large 
-    set AZURE_OPENAI_CHAT_DEPLOYMENT=gpt-4o
-
+    set AzureOpenAiEndpoint=https://<your-resource-name>.openai.azure.com/ 
+    set AzureOpenAiKey=<your-api-key> 
+    set QdrantHost=http://localhost:6333
+    set QdrantKey=<your-qdrant-api-key>
+1. 
     Or add these to your `appsettings.json` or user secrets as appropriate for your project.
 
 ---
@@ -53,22 +61,23 @@ This solution targets **.NET 9** and integrates with Azure OpenAI for advanced l
 1. **Restore Dependencies**
     dotnet restore
 
-    
 2. **Build the Solution**
     dotnet build
 
 3. **Run the Application**
     dotnet run --project <YourProjectName>
 
-     Replace `<YourProjectName>` with the actual project folder or `.csproj` file name.
+    Replace `<YourProjectName>` with the actual project folder or `.csproj` file name.
 
 ---
 
 ## Notes
 
 - Ensure your Azure OpenAI deployments are active and you have sufficient quota.
+- Ensure your Qdrant instance is running and accessible at the configured endpoint.
 - If you encounter authentication or deployment errors, double-check your environment variables and Azure resource configuration.
 - For more information on Azure OpenAI, see the [official documentation](https://learn.microsoft.com/azure/ai-services/openai/).
+- For more information on Qdrant, see the [Qdrant documentation](https://qdrant.tech/documentation/).
 
 ---
 
@@ -76,6 +85,7 @@ This solution targets **.NET 9** and integrates with Azure OpenAI for advanced l
 
 - **Model Not Found:** Verify the deployment names match those configured in Azure.
 - **Authentication Errors:** Ensure your API key and endpoint are correct and not expired.
+- **Qdrant Connection Issues:** Ensure Qdrant is running and the endpoint is correct.
 - **.NET Version Issues:** Confirm you are using .NET 9 SDK.
 
 ---
