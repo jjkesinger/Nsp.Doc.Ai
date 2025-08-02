@@ -34,6 +34,7 @@ namespace Nsp.Doc.Ai.Domain
             services.AddScoped<DocumentReader>();
             services.AddScoped<DocumentStorage>();
             services.AddScoped<ChatService>();
+            services.AddScoped<PdfReader>();
 
             services.AddSingleton<DocumentSearchPlugin>();
             

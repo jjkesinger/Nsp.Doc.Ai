@@ -12,6 +12,7 @@
     <PackageReference Include="Microsoft.Extensions.VectorData.Abstractions" Version="9.7.0" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.61.0" />
     <PackageReference Include="Microsoft.SemanticKernel.Connectors.Qdrant" Version="1.61.0-preview" />
+    <PackageReference Include="PdfPig" Version="0.1.11" />
   </ItemGroup>
 
 </Project>

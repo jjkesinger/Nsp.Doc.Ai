@@ -3,7 +3,7 @@ using Nsp.Doc.Ai.Domain.Model;
 
 namespace Nsp.Doc.Ai.Domain.Services
 {
-    public class DocumentReader
+    public class DocumentReader(PdfReader pdfReader)
     {
         public async Task<Document[]> ReadDocuments(List<(string FileName, string FileType, byte[] Contents)> files, CancellationToken cancellationToken)
         {
@@ -21,7 +21,12 @@ namespace Nsp.Doc.Ai.Domain.Services
                 }
                 else if (file.FileType == "application/pdf")
                 {
-                    
+                    docs.Add(new Document
+                    {
+                        Key = Guid.NewGuid(),
+                        Title = file.FileName,
+                        Content = pdfReader.ReadPdfContent(file.Contents)
+                    });
                 }
             });
 
