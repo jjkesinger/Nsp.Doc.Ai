@@ -32,7 +32,10 @@ if (app.Environment.IsDevelopment())
 app.UseAntiforgery();
 app.UseHttpsRedirection();
 
-app.MapGet("/ask", async (string query, ChatService cs, CancellationToken ct) => await cs.Ask(query, ct));
+app.MapGet("/ask", async (string query, ChatService cs, CancellationToken ct) => {
+    var res = await cs.Ask(query, ct);
+    return new { message = res };
+});
 
 app.MapPost("/upload", async ([FromForm]IFormFileCollection files, DocumentStorage doc, DocumentReader s, CancellationToken ct) =>
 {
@@ -46,7 +49,7 @@ app.MapPost("/upload", async ([FromForm]IFormFileCollection files, DocumentStora
     var docs = await s.ReadDocuments(docFiles, ct);
     await doc.StoreDocuments(docs, ct);
 
-    return Results.Ok($"{docs.Length} File(s) uploaded successfully.");
+    return Results.Json(new { message = $"{docs.Length} File(s) uploaded." });
 }).DisableAntiforgery();
 
 app.Run();
