@@ -24,20 +24,7 @@ export class App {
     inputElement.value = '';
   }
 
-  private askAssistant(message: string): void {
-    this.http.get<{ response: any }>('https://super-duper-telegram-pg4jgr646xv2rxw-5000.app.github.dev/ask?query=' + encodeURIComponent(message))
-      .subscribe({
-        next: (res: any) => {
-          this.chatHistory.push(new ChatHistory(res.message, true));
-        },
-        error: (err) => {
-          console.error('API error:', err);
-          this.chatHistory.push(new ChatHistory('Sorry, something went wrong.', true));
-        }
-      });
-  }
-
-  onFileSelected(event: Event): void {
+  public onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
@@ -57,6 +44,19 @@ export class App {
           }
         });
     }
+  }
+
+  private askAssistant(message: string): void {
+    this.http.get<{ response: any }>('https://super-duper-telegram-pg4jgr646xv2rxw-5000.app.github.dev/ask?query=' + encodeURIComponent(message))
+      .subscribe({
+        next: (res: any) => {
+          this.chatHistory.push(new ChatHistory(res.message, true));
+        },
+        error: (err) => {
+          console.error('API error:', err);
+          this.chatHistory.push(new ChatHistory('Sorry, something went wrong.', true));
+        }
+      });
   }
 }
 
