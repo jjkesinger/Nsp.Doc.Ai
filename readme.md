@@ -1,5 +1,5 @@
 # Summary
-[![Watch the video](https://raw.githubusercontent.com/jjkesinger/Nsp.Doc.Ai/main/assets/thumbnail.jpg)](https://raw.githubusercontent.com/jjkesinger/Nsp.Doc.Ai/main/assets/Build_a_Private_AI__Deconstructing_the_Blueprint.mp4)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cRMBgOTsgN0?si=nDKBxN8eTH2KpGcd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 
 
