@@ -1,3 +1,8 @@
+# Summary
+[![Watch the video](https://raw.githubusercontent.com/jjkesinger/Nsp.Doc.Ai/main/assets/thumbnail.jpg)](https://raw.githubusercontent.com/jjkesinger/Nsp.Doc.Ai/main/assets/Build_a_Private_AI__Deconstructing_the_Blueprint.mp4)
+
+
+
 # Solution Setup Guide
 
 This solution targets **.NET 9** and integrates with Azure OpenAI for advanced language and embedding capabilities. Follow the steps below to set up and run the solution.
@@ -40,9 +45,9 @@ This solution targets **.NET 9** and integrates with Azure OpenAI for advanced l
 
    Configure the following environment variables with your Azure OpenAI and Qdrant details:
 
-   - `AzureOpenAiEndpoint` – Your Azure OpenAI endpoint URL.
-   - `AzureOpenAiKey` – Your Azure OpenAI API key.
-   - `QdrantHost` – The URL of your Qdrant instance (e.g., `http://localhost:6333`).
+   - `AzureOpenAiEndpoint` â€“ Your Azure OpenAI endpoint URL.
+   - `AzureOpenAiKey` â€“ Your Azure OpenAI API key.
+   - `QdrantHost` â€“ The URL of your Qdrant instance (e.g., `http://localhost:6333`).
    - `QdrantKey` - Your Qdrant API Key 
 
    Example (Windows Command Prompt):
