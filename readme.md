@@ -1,6 +1,6 @@
 # NSP.Doc.AI – Project Setup & Semantic Kernel Overview
 
-[![Watch the video](https://img.youtube.com/vi/cRMBgOTsgN0/maxresdefault.jpg)](https://youtu.be/cRMBgOTsgN0)
+[![Watch the video](https://img.youtube.com/vi/BgFDT4RdXqA/0.jpg)](https://www.youtube.com/watch?v=BgFDT4RdXqA)
 
 ---
 
