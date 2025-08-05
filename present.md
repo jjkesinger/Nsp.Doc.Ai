@@ -1,4 +1,4 @@
-* Semantic Kernel with OpenAI and Qdrant
+# Semantic Kernel with OpenAI and Qdrant
 - Overview
 - Demo
 - Code
