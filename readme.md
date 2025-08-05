@@ -1,96 +1,144 @@
-# Summary
+# NSP.Doc.AI – Project Setup & Semantic Kernel Overview
 
 [![Watch the video](https://img.youtube.com/vi/cRMBgOTsgN0/maxresdefault.jpg)](https://youtu.be/cRMBgOTsgN0)
 
-# Solution Setup Guide
+---
 
-This solution targets **.NET 9** and integrates with Azure OpenAI for advanced language and embedding capabilities. Follow the steps below to set up and run the solution.
+## Project Overview
+
+NSP.Doc.AI is an AI-powered document assistant leveraging Azure OpenAI for advanced language and embedding capabilities, and Qdrant for vector storage. The solution includes a web UI (Angular), a .NET 9 backend, and seamless integration with Azure OpenAI and Qdrant.
 
 ---
 
 ## Prerequisites
 
-1. **.NET 9 SDK**
-   - Download and install from: [https://dotnet.microsoft.com/download/dotnet/9.0](https://dotnet.microsoft.com/download/dotnet/9.0)
+1. **.NET 9 SDK**  
+   Download and install from: [https://dotnet.microsoft.com/download/dotnet/9.0](https://dotnet.microsoft.com/download/dotnet/9.0)  
+   _If you’re on Ubuntu 24.04, download the tarball and extract it manually. Add it to your PATH._
 
-2. **Azure Subscription**
-   - Sign up or log in at: [https://portal.azure.com](https://portal.azure.com)
+2. **Azure Subscription**  
+   Sign up or log in at: [https://portal.azure.com](https://portal.azure.com)
 
-3. **Azure OpenAI Resource**
+3. **Azure OpenAI Resource**  
    - Create an Azure OpenAI resource in the Azure Portal.
-
-4. **Deploy Models**
-   - In your Azure OpenAI resource, deploy the following models:
+   - Deploy the following models:
      - `text-embedding-3-large`
      - `gpt-4o`
-   - Note the deployment names you assign (you will need them for configuration).
+   - Note the deployment names for configuration.
 
-5. **API Keys and Endpoints**
-   - Obtain your Azure OpenAI API key and endpoint from the Azure Portal.
-
-6. **Qdrant Vector Storage**
-   - Set up a Qdrant instance for vector storage. You can run Qdrant locally using Docker or use a managed Qdrant Cloud service.
-   - **To run Qdrant locally with Docker:**
-
-   - docker run -p 6333:6333 -p 6334:6334 qdrant/qdrant
-  - For more information or advanced configuration, see the [Qdrant documentation](https://qdrant.tech/documentation/).
-   - Note the Qdrant endpoint (e.g., `http://localhost:6333`) for configuration.
+4. **Qdrant Vector Storage**  
+   - Run locally with Docker:  
+     ```
+     docker run -p 6333:6333 -p 6334:6334 qdrant/qdrant
+     ```
+   - Or use [Qdrant Cloud](https://qdrant.tech/documentation/).
 
 ---
 
 ## Configuration
 
-1. **Set Environment Variables**
+Set the following environment variables (or add to `appsettings.json`):
 
-   Configure the following environment variables with your Azure OpenAI and Qdrant details:
+- `AzureOpenAiEndpoint` – Your Azure OpenAI endpoint URL
+- `AzureOpenAiKey` – Your Azure OpenAI API key
+- `QdrantHost` – Qdrant endpoint (e.g., `http://localhost:6333`)
+- `QdrantKey` – Qdrant API Key
 
-   - `AzureOpenAiEndpoint` – Your Azure OpenAI endpoint URL.
-   - `AzureOpenAiKey` – Your Azure OpenAI API key.
-   - `QdrantHost` – The URL of your Qdrant instance (e.g., `http://localhost:6333`).
-   - `QdrantKey` - Your Qdrant API Key 
-
-   Example (Windows Command Prompt):
-
-    set AzureOpenAiEndpoint=https://<your-resource-name>.openai.azure.com/ 
-    set AzureOpenAiKey=<your-api-key> 
-    set QdrantHost=http://localhost:6333
-    set QdrantKey=<your-qdrant-api-key>
-1. 
-    Or add these to your `appsettings.json` or user secrets as appropriate for your project.
+Example (Linux):
+```
+export AzureOpenAiEndpoint=https://<your-resource>.openai.azure.com/
+export AzureOpenAiKey=<your-api-key>
+export QdrantHost=http://localhost:6333
+export QdrantKey=<your-qdrant-api-key>
+```
 
 ---
 
-## Build and Run
+## Build & Run
 
-1. **Restore Dependencies**
-    dotnet restore
-
-2. **Build the Solution**
-    dotnet build
-
-3. **Run the Application**
-    dotnet run --project <YourProjectName>
-
-    Replace `<YourProjectName>` with the actual project folder or `.csproj` file name.
-
----
-
-## Notes
-
-- Ensure your Azure OpenAI deployments are active and you have sufficient quota.
-- Ensure your Qdrant instance is running and accessible at the configured endpoint.
-- If you encounter authentication or deployment errors, double-check your environment variables and Azure resource configuration.
-- For more information on Azure OpenAI, see the [official documentation](https://learn.microsoft.com/azure/ai-services/openai/).
-- For more information on Qdrant, see the [Qdrant documentation](https://qdrant.tech/documentation/).
+1. Restore dependencies:  
+   ```
+   dotnet restore
+   ```
+2. Build the solution:  
+   ```
+   dotnet build
+   ```
+3. Run the backend:  
+   ```
+   dotnet run --project Nsp.Doc.Ai.Api
+   ```
+4. Start the Angular UI as per its documentation.
 
 ---
 
-## Troubleshooting
+## How the App Works
 
-- **Model Not Found:** Verify the deployment names match those configured in Azure.
-- **Authentication Errors:** Ensure your API key and endpoint are correct and not expired.
-- **Qdrant Connection Issues:** Ensure Qdrant is running and the endpoint is correct.
-- **.NET Version Issues:** Confirm you are using .NET 9 SDK.
+- **User Interaction:**  
+  The Angular UI (`app.ts`) lets users chat or upload files. Messages and files are sent to the backend API.
+
+- **Backend Processing:**  
+  The .NET backend uses **Semantic Kernel** to:
+  - Generate embeddings for documents/queries using Azure OpenAI (`text-embedding-3-large`).
+  - Store/retrieve vectors in Qdrant for semantic search.
+  - Use `gpt-4o` for chat completions and responses.
+
+- **Semantic Kernel Flow:**  
+  1. **Embedding:**  
+     User input or document is embedded via Azure OpenAI.
+  2. **Vector Search:**  
+     Embedding is sent to Qdrant to find relevant documents.
+  3. **Completion:**  
+     Context and user query are sent to `gpt-4o` for a natural language response.
+
+---
+
+## Example Angular UI Code
+
+```typescript
+public addChat(inputElement: HTMLInputElement): void {
+  const message = inputElement.value.trim();
+  if (message) {
+    this.chatHistory.push(new ChatHistory(message, false));
+    this.askAssistant(message);
+  }
+  inputElement.value = '';
+}
+
+private askAssistant(message: string): void {
+  this.http.get<{ response: any }>('https://<api-url>/ask?query=' + encodeURIComponent(message))
+    .subscribe({
+      next: (res: any) => {
+        this.chatHistory.push(new ChatHistory(res.message, true));
+      },
+      error: (err) => {
+        this.chatHistory.push(new ChatHistory('Sorry, something went wrong.', true));
+      }
+    });
+}
+```
+
+---
+
+## What is Semantic Kernel?
+
+- **Semantic Kernel** is a Microsoft SDK for integrating LLMs (like Azure OpenAI) with traditional programming.
+- It orchestrates:
+  - Prompt engineering
+  - Embedding generation
+  - Memory (vector search)
+  - Chaining LLM calls with code
+
+**In this project:**  
+Semantic Kernel connects user input, document embeddings, Qdrant vector search, and LLM completions into a seamless workflow.
+
+---
+
+## Resources
+
+- [Azure OpenAI Documentation](https://learn.microsoft.com/azure/ai-services/openai/)
+- [Qdrant Documentation](https://qdrant.tech/documentation/)
+- [Semantic Kernel](https://github.com/microsoft/semantic-kernel)
 
 ---
 
