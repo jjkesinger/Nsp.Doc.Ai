@@ -10,20 +10,7 @@ namespace Nsp.Doc.Ai.Domain.Services
             var docs = new ConcurrentBag<Document>();
             Parallel.ForEach(files, (file) =>
             {
-                if (file.FileType == "text/plain")
-                {
-                    var contents = System.Text.Encoding.UTF8.GetString(file.Contents);
-                    if (!string.IsNullOrWhiteSpace(contents))
-                    {
-                        docs.Add(new Document
-                        {
-                            Key = Guid.NewGuid(),
-                            Title = file.FileName,
-                            Content = contents
-                        });
-                    }
-                }
-                else if (file.FileType == "text/html")
+                if (file.FileType == "text/plain" || file.FileType == "text/html" || file.FileType == "application/json")
                 {
                     var contents = System.Text.Encoding.UTF8.GetString(file.Contents);
                     if (!string.IsNullOrWhiteSpace(contents))
