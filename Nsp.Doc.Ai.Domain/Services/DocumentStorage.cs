@@ -8,7 +8,7 @@ namespace Nsp.Doc.Ai.Domain.Services
     {
         public async Task StoreDocuments(Document[] documents, CancellationToken cancellationToken)
         {
-            var collection = store.GetCollection<ulong, Document>("library");
+            using var collection = store.GetCollection<ulong, Document>("library");
             await collection.EnsureCollectionExistsAsync(cancellationToken);
 
             await GenerateEmbedding(documents);

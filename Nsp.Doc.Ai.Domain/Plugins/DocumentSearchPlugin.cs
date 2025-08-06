@@ -12,9 +12,7 @@ namespace Nsp.Doc.Ai.Domain.Plugins
         [Description("Search for a document in the library similar to the given query.")]
         public async Task<Document[]> SearchAsync(string query, CancellationToken cancellationToken)
         {
-            var collection = store.GetCollection<Guid, Document>("library");
-
-            var results = collection.SearchAsync(
+            var results = store.GetCollection<Guid, Document>("library").SearchAsync(
                     searchValue: await embeddingGenerator.GenerateVectorAsync(query, cancellationToken: cancellationToken),
                     top: 10,
                     cancellationToken: cancellationToken)

@@ -10,7 +10,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('nsp-doc-ai-ui');
+  protected readonly title = signal('Docu-Grok');
   protected readonly chatHistory: ChatHistory[] = [];
 
   constructor(private http: HttpClient) { }

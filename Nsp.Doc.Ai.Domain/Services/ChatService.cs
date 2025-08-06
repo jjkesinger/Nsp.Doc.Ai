@@ -7,13 +7,9 @@ namespace Nsp.Doc.Ai.Domain.Services
     {
         public async Task<string> Ask(string query, CancellationToken cancellationToken)
         {
-            var chatHistory = new ChatHistory(
+            return (await kernel.GetRequiredService<IChatCompletionService>().GetChatMessageContentAsync(
                 @$"Given this query: {query}, answer the question based on the documents in the library to the best of your ability. 
-                If the answer is in the documents, reference the document title. Otherwise, say the answer was not found in the documents."
-            );
-
-            var chatCompletion = kernel.GetRequiredService<IChatCompletionService>();
-            return (await chatCompletion.GetChatMessageContentAsync(chatHistory,
+                If the answer is in the documents, reference the document title. Otherwise, say the answer was not found in the documents.",
                 new PromptExecutionSettings() { FunctionChoiceBehavior = FunctionChoiceBehavior.Required() },
                 kernel, cancellationToken)).Content!;
         }
