@@ -6,24 +6,19 @@ namespace Nsp.Doc.Ai.Domain.Services
 {
     public class DocumentStorage(VectorStore store, IEmbeddingGenerator<string, Embedding<float>> embedding)
     {
-        public async Task StoreDocuments(Document[] documents, CancellationToken cancellationToken)
+        public async Task<int> StoreDocuments(Document[] documents, CancellationToken cancellationToken)
         {
             using var collection = store.GetCollection<ulong, Document>("library");
             await collection.EnsureCollectionExistsAsync(cancellationToken);
 
-            await GenerateEmbedding(documents);
+            await Task.WhenAll(documents.Select(doc => Task.Run(async () =>
+            {
+                doc.DefinitionEmbedding = (await embedding.GenerateAsync(doc.Content)).Vector;
+            })));
 
             await collection.UpsertAsync(documents, cancellationToken);
-        }
 
-        private async Task GenerateEmbedding(Document[] documents)
-        {
-            var tasks = documents.Select(entry => Task.Run(async () =>
-            {
-                entry.DefinitionEmbedding = (await embedding.GenerateAsync(entry.Content)).Vector;
-            }));
-
-            await Task.WhenAll(tasks);
+            return documents.Length;
         }
     }
 }

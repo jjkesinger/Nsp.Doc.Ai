@@ -7,7 +7,7 @@ namespace Nsp.Doc.Ai.Domain.Services
 {
     public class PdfReader
     {
-        public string ReadPdfContent(byte[] pdfContents)
+        public string ReadPdfContent(byte[] pdfContents, CancellationToken cancellationToken)
         {
             var sb = new StringBuilder();
             using PdfDocument document = PdfDocument.Open(pdfContents);

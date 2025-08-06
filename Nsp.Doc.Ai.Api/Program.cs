@@ -33,23 +33,21 @@ app.UseAntiforgery();
 app.UseHttpsRedirection();
 
 app.MapGet("/ask", async (string query, ChatService cs, CancellationToken ct) => {
-    var res = await cs.Ask(query, ct);
-    return new { message = res };
+    return Results.Json(new { message = await cs.Ask(query, ct) });
 });
 
-app.MapPost("/upload", async ([FromForm]IFormFileCollection files, DocumentStorage doc, DocumentReader s, CancellationToken ct) =>
+app.MapPost("/upload", async ([FromForm]IFormFileCollection files, DocumentStorage ds, DocumentReader dr, CancellationToken ct) =>
 {
-    var docFiles = (await Task.WhenAll(files.Select(async file =>
-    {
-        using var stream = new MemoryStream();
-        await file.CopyToAsync(stream, ct);
-        return (file.FileName, file.ContentType, stream.ToArray());
-    }))).ToList();
+    var uploadCount = await ds.StoreDocuments(
+        await dr.ReadDocuments(
+        [.. await Task.WhenAll(files.Select(async file =>
+            {
+                using var stream = new MemoryStream();
+                await file.CopyToAsync(stream, ct);
+                return (file.FileName, file.ContentType, stream.ToArray());
+            }))], ct), ct);
 
-    var docs = await s.ReadDocuments(docFiles, ct);
-    await doc.StoreDocuments(docs, ct);
-
-    return Results.Json(new { message = $"{docs.Length} File(s) uploaded." });
+    return Results.Json(new { message = $"{uploadCount} File(s) uploaded." });
 }).DisableAntiforgery();
 
 app.Run();
